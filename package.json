@@ -1,5 +1,5 @@
 {
-  "name": "totoro",
+  "name": "totoro-node",
   "version": "1.0.0",
   "description": "Route Management for API Versioning",
   "main": "index.js",
