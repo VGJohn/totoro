@@ -16,6 +16,15 @@
     "url": "https://github.com/VGJohn/totoro.git",
     "type": "git"
   },
+  "keywords": [
+      "api",
+      "api-versioning",
+      "node",
+      "totoro",
+      "totoro-node",
+      "route management",
+      "module"
+  ],
   "author": "VGJohn",
   "license": "MIT"
 }
