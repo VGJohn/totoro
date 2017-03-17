@@ -1,6 +1,6 @@
 {
   "name": "totoro-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Route Management for API Versioning",
   "main": "index.js",
   "scripts": {
@@ -17,13 +17,13 @@
     "type": "git"
   },
   "keywords": [
-      "api",
-      "api-versioning",
-      "node",
-      "totoro",
-      "totoro-node",
-      "route management",
-      "module"
+    "api",
+    "api-versioning",
+    "node",
+    "totoro",
+    "totoro-node",
+    "route management",
+    "module"
   ],
   "author": "VGJohn",
   "license": "MIT"
