@@ -1,0 +1,21 @@
+{
+  "name": "totoro",
+  "version": "1.0.0",
+  "description": "Route Management for API Versioning",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "winston": "^2.3.0",
+    "js-yaml": "3.8.2",
+    "clone": "^2.1.0"
+  },
+  "repository": {
+    "url": "https://github.com/VGJohn/totoro.git",
+    "type": "git"
+  },
+  "author": "VGJohn",
+  "license": "MIT"
+}
