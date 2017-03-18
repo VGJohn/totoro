@@ -38,8 +38,8 @@ var rain = function(apiConfig) {
 
             for (var endpoint in apiVersionConfig) {
                 if (apiVersionConfig.hasOwnProperty(endpoint)) {
-                    apiVersionConfig[endpoint].active = apiVersionConfig[endpoint].active || apiVersionActive;
-                    apiVersionConfig[endpoint].deprecated = apiVersionConfig[endpoint].deprecated || apiVersionDeprecated;
+                    apiVersionConfig[endpoint].active = apiVersionConfig[endpoint].active && apiVersionActive;
+                    apiVersionConfig[endpoint].deprecated = apiVersionConfig[endpoint].deprecated && apiVersionDeprecated;
                     var endpoint = new Endpoint(apiVersion, endpoint, apiVersionConfig[endpoint]);
 
                     // add new endpoint to the list or replace if it exists already
