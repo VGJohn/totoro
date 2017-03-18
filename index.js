@@ -102,31 +102,31 @@ function populateRouter(versions) {
 function constructRoute(endpoint) {
     switch (endpoint.endpointConfig.method) {
         case consts.HTTP_GET:
-            winston.debug('Adding endpoint \'', endpoint.endpointConfig.method, ' /', endpoint.apiVersion, endpoint.endpoint, '\'');
+            winston.debug('Adding endpoint \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
             router.get('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res) {
                 endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
             });
             break;
         case consts.HTTP_POST:
-            winston.debug('Adding endpoint \'', endpoint.endpointConfig.method, ' /', endpoint.apiVersion, endpoint.endpoint, '\'');
+            winston.debug('Adding endpoint \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
             router.post('/' + endpoint.apiVersion + endpoint.endpoint, urlencodedParser, function(req, res) {
                 endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
             });
             break;
         case consts.HTTP_DELETE:
-            winston.debug('Adding endpoint \'', endpoint.endpointConfig.method, ' /', endpoint.apiVersion, endpoint.endpoint, '\'');
+            winston.debug('Adding endpoint \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
             router.delete('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res) {
                 endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
             });
             break;
         case consts.HTTP_PUT:
-            winston.debug('Adding endpoint \'', endpoint.endpointConfig.method, ' /', endpoint.apiVersion, endpoint.endpoint, '\'');
+            winston.debug('Adding endpoint \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
             router.put('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res) {
                 endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
             });
             break;
         default:
-            winston.debug('HTTP Method not recognised! Not adding endpoint \'', endpoint.endpointConfig.method, ' /', endpoint.apiVersion, endpoint.endpoint, '\'')
+            winston.debug('HTTP Method not recognised! Not adding endpoint \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
     }
 }
 
