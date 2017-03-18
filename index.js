@@ -58,7 +58,6 @@ function inheritEndpoints(versions, previousApiVersion, apiVersion) {
     }
 
     for (var i = 0; i < versions[previousApiVersion].length; i++) {
-        winston.debug(versions[previousApiVersion][i]);
         if (!versions[previousApiVersion][i].deprecated) {
             var endpointCopy = clone(versions[previousApiVersion][i]);
             endpointCopy.apiVersion = apiVersion;
@@ -66,6 +65,8 @@ function inheritEndpoints(versions, previousApiVersion, apiVersion) {
             versions[apiVersion].push(endpointCopy);
         }
     }
+
+    winston.debug(apiVersion, JSON.stringify(versions);
 }
 
 function pushOrReplaceEndpoint(endpoints, endpoint) {
