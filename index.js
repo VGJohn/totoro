@@ -85,9 +85,9 @@ function pushOrReplaceEndpoint(endpoints, endpoint) {
 function populateRouter(versions) {
     for (var apiVersion in versions) {
         if (versions.hasOwnProperty(apiVersion)) {
-            for (var endpoint in versions[apiVersion]) {
-                if (endpoint.endpointConfig.active) {
-                    constructRoute(endpoint);
+            for (var i = 0; i < versions[apiVersion].length; i++) {
+                if (versions[apiVersion][i].endpointConfig.active) {
+                    constructRoute(versions[apiVersion][i]);
                 }
             }
         }
