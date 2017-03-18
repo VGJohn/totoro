@@ -4,6 +4,8 @@ var winston = require('winston');
 var consts = require('./consts.js');
 var Endpoint = require('./objects/Endpoint.js');
 var clone = require('clone');
+var bodyParser = require('body-parser')
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 winston.level = 'debug';
 
@@ -104,7 +106,7 @@ function constructRoute(endpoint) {
             });
             break;
         case 'POST':
-            router.post('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res) {
+            router.post('/' + endpoint.apiVersion + endpoint.endpoint, urlencodedParser, function(req, res) {
                 endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
             });
             break;

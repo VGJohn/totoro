@@ -10,7 +10,8 @@
     "express": "^4.14.0",
     "winston": "^2.3.0",
     "js-yaml": "3.8.2",
-    "clone": "^2.1.0"
+    "clone": "^2.1.0",
+    "body-parser": "^1.15.2"
   },
   "repository": {
     "url": "https://github.com/VGJohn/totoro.git",
