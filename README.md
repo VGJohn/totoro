@@ -67,6 +67,11 @@ This returns a router with the following routes:
 
 ----------
 
+Logging can be enabled by passing an extra parameter when calling the "rain" function.
+
+    totoro.rain({<configuration>}, true)
+
+----------
 
 The configuration map used in the "rain" function contains a few required fields:
 
