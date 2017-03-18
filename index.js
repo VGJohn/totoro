@@ -40,6 +40,9 @@ var rain = function(apiConfig) {
 
             for (var endpoint in apiVersionConfig) {
                 if (apiVersionConfig.hasOwnProperty(endpoint)) {
+
+                    winston.debug(apiVersionConfig[endpoint].active);
+                    
                     apiVersionConfig[endpoint].active = apiVersionConfig[endpoint].active && apiVersionActive;
                     apiVersionConfig[endpoint].deprecated = apiVersionConfig[endpoint].deprecated || apiVersionDeprecated;
                     var endpoint = new Endpoint(apiVersion, endpoint, apiVersionConfig[endpoint]);
