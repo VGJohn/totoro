@@ -61,6 +61,7 @@ function inheritEndpoints(versions, previousApiVersion, apiVersion) {
         if (!versions[previousApiVersion][i].deprecated) {
             var endpointCopy = clone(versions[previousApiVersion][i]);
             endpointCopy.apiVersion = apiVersion;
+            endpointCopy.endpointConfig.active = true;
             versions[apiVersion].push(endpointCopy);
         }
     }
