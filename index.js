@@ -24,24 +24,26 @@ var rain = function(apiConfig) {
     for (var apiVersion in apiConfig) {
         if (apiConfig.hasOwnProperty(apiVersion)) {
             var apiVersionConfig = apiConfig[apiVersion];
-            if (apiVersionConfig.active) {
-                delete apiVersionConfig.active;
-                versions[apiVersion] = [];
+            var apiVersionActive = apiVersionConfig.active;
+            var apiVersionDeprecated = apiVersionConfig.deprecated;
+            delete apiVersionConfig.active;
+            delete apiVersionConfig.deprecated;
+            versions[apiVersion] = [];
 
-                // copy over endpoints from previous version if needed
-                inheritEndpoints(versions, previousApiVersion, apiVersion);
+            // copy over endpoints from previous version if needed
+            inheritEndpoints(versions, previousApiVersion, apiVersion);
 
-                // set previous api version number
-                previousApiVersion = apiVersion;
+            // set previous api version number
+            previousApiVersion = apiVersion;
 
-                for (var endpoint in apiVersionConfig) {
-                    if (apiVersionConfig.hasOwnProperty(endpoint)) {
-                        if (apiVersionConfig[endpoint].active) {
-                            var endpoint = new Endpoint(apiVersion, endpoint, apiVersionConfig[endpoint]);
-                            // add new endpoint to the list or replace if it exists already
-                            pushOrReplaceEndpoint(versions[apiVersion], endpoint);
-                        }
-                    }
+            for (var endpoint in apiVersionConfig) {
+                if (apiVersionConfig.hasOwnProperty(endpoint)) {
+                    apiVersionConfig[endpoint].active = apiVersionConfig[endpoint].active || apiVersionActive;
+                    apiVersionConfig[endpoint].deprecated = apiVersionConfig[endpoint].deprecated || apiVersionDeprecated;
+                    var endpoint = new Endpoint(apiVersion, endpoint, apiVersionConfig[endpoint]);
+
+                    // add new endpoint to the list or replace if it exists already
+                    pushOrReplaceEndpoint(versions[apiVersion], endpoint);
                 }
             }
         }
@@ -84,7 +86,9 @@ function populateRouter(versions) {
         if (versions.hasOwnProperty(apiVersion)) {
             for (var endpoint in versions[apiVersion]) {
                 if (versions[apiVersion].hasOwnProperty(endpoint)) {
-                    constructRoute(versions[apiVersion][endpoint]);
+                    if (versions[apiVersion][endpoint].active) {
+                        constructRoute(versions[apiVersion][endpoint]);
+                    }
                 }
             }
         }
