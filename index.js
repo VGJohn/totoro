@@ -66,7 +66,7 @@ function inheritEndpoints(versions, previousApiVersion, apiVersion) {
         }
     }
 
-    winston.debug(apiVersion, JSON.stringify(versions);
+    winston.debug(apiVersion, JSON.stringify(versions));
 }
 
 function pushOrReplaceEndpoint(endpoints, endpoint) {
