@@ -86,10 +86,8 @@ function populateRouter(versions) {
     for (var apiVersion in versions) {
         if (versions.hasOwnProperty(apiVersion)) {
             for (var endpoint in versions[apiVersion]) {
-                if (versions[apiVersion].hasOwnProperty(endpoint)) {
-                    if (versions[apiVersion][endpoint].endpointConfig.active) {
-                        constructRoute(versions[apiVersion][endpoint]);
-                    }
+                if (endpoint.endpointConfig.active) {
+                    constructRoute(endpoint);
                 }
             }
         }
