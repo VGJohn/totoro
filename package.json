@@ -19,12 +19,23 @@
   },
   "keywords": [
     "api",
+    "api version",
+    "api versions",
     "api-versioning",
     "node",
+    "node.js",
     "totoro",
     "totoro-node",
+    "route",
+    "routes",
+    "route manager",
+    "express",
+    "express router",
     "route management",
-    "module"
+    "module",
+    "api version manager",
+    "deprecate routes",
+    "reduce code duplication"
   ],
   "author": "VGJohn",
   "license": "MIT"
