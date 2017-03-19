@@ -62,18 +62,20 @@ This returns a router with the following routes:
 
     /api/v1/test/endpoint
     /api/v1/another/test/endpoint
-    /api/v2/test/endpoint
+    /api/v2/test/endpoint - overrides original implementation from version v1
+    /api/v2/another/test/endpoint
 
+All the previous endpoints in version `v1` are carried over to version `v2` but any endpoints that are redefined in `v2` will override the original endpoint with the new implementation for version `v2`. This type of inheritance and overriding can be controlled using the `active` and `deprecated` fields while defining the API endpoints.
 
 ----------
 
-Logging can be enabled by passing an extra parameter when calling the "rain" function.
+Logging can be enabled by passing an extra parameter when calling the `rain` function.
 
     totoro.rain({<configuration>}, true)
 
 ----------
 
-The configuration map used in the "rain" function contains a few required fields:
+The configuration map used in the `rain` function contains a few required fields:
 
  - `active`
 	 - This indicates whether or not the endpoint should be added to the router. If this field is set to false in the API version definition then it will not include any endpoints specified for that API version in the router. If this field is set to false in a specific endpoint definition then only that endpoint is excluded from the router. This offers you the ability to easily enable or disabled full versions or specific endpoints of your API.
@@ -87,7 +89,7 @@ The configuration map used in the "rain" function contains a few required fields
  - `endpointImplementation`
 	- This points to a function which will be invoked when the endpoint is called. The function must accept three parameters; apiVersion, req, res e.g. `function(apiVersion, req, res) { <endpoint implementation> }`
 		- `apiVersion`
-			- This is the API version for the endpoint being called. In the above example, it would be "v1" and "v2" respectively.
+			- This is the API version for the endpoint being called. In the above example, it would be `v1` and `v2` respectively.
 		- `req`
 			- This is the express router parameter which holds all the request data when the endpoint is called.
 	 - `res`
