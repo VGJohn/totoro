@@ -26,8 +26,15 @@ var rain = function(apiConfig) {
     for (var apiVersion in apiConfig) {
         if (apiConfig.hasOwnProperty(apiVersion)) {
             var apiVersionConfig = apiConfig[apiVersion];
+
             var apiVersionActive = apiVersionConfig.active;
+            // use default value if not found
+            if (apiVersionActive == null) apiVersionActive = true;
+
             var apiVersionDeprecated = apiVersionConfig.deprecated;
+            // use default value if not found
+            if (apiVersionDeprecated == null) apiVersionDeprecated = false;
+
             delete apiVersionConfig.active;
             delete apiVersionConfig.deprecated;
             versions[apiVersion] = [];
@@ -40,9 +47,16 @@ var rain = function(apiConfig) {
 
             for (var endpoint in apiVersionConfig) {
                 if (apiVersionConfig.hasOwnProperty(endpoint)) {
+                    var endpointActive = apiVersionConfig[endpoint].active;
+                    // use default value if not found
+                    if (endpointActive == null) endpointActive = true;
 
-                    apiVersionConfig[endpoint].active = apiVersionConfig[endpoint].active && apiVersionActive;
-                    apiVersionConfig[endpoint].deprecated = apiVersionConfig[endpoint].deprecated || apiVersionDeprecated;
+                    var endpointDeprecated = apiVersionConfig[endpoint].deprecated;
+                    // use default value if not found
+                    if (endpointDeprecated == null) endpointDeprecated = false;
+
+                    apiVersionConfig[endpoint].active = endpointActive && apiVersionActive;
+                    apiVersionConfig[endpoint].deprecated = endpointDeprecated || apiVersionDeprecated;
                     var endpoint = new Endpoint(apiVersion, endpoint, apiVersionConfig[endpoint]);
 
                     // add new endpoint to the list or replace if it exists already
