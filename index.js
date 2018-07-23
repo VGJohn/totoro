@@ -119,26 +119,26 @@ function constructRoute(endpoint) {
     switch (endpoint.endpointConfig.method) {
         case consts.HTTP_GET:
             winston.debug('Adding route \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
-            router.get('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res) {
-                endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
+            router.get('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res, next) {
+                endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res, next);
             });
             break;
         case consts.HTTP_POST:
             winston.debug('Adding route \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
-            router.post('/' + endpoint.apiVersion + endpoint.endpoint, urlencodedParser, function(req, res) {
-                endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
+            router.post('/' + endpoint.apiVersion + endpoint.endpoint, urlencodedParser, function(req, res, next) {
+                endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res, next);
             });
             break;
         case consts.HTTP_DELETE:
             winston.debug('Adding route \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
-            router.delete('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res) {
-                endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
+            router.delete('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res, next) {
+                endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res, next);
             });
             break;
         case consts.HTTP_PUT:
             winston.debug('Adding route \'' + endpoint.endpointConfig.method, ' /' + endpoint.apiVersion + endpoint.endpoint + '\'');
-            router.put('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res) {
-                endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res);
+            router.put('/' + endpoint.apiVersion + endpoint.endpoint, function(req, res, next) {
+                endpoint.endpointConfig.endpointImplementation(endpoint.apiVersion, req, res, next);
             });
             break;
         default:
