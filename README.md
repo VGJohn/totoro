@@ -82,13 +82,15 @@ The configuration map used in the `rain` function contains a few fields:
 	- This can only be defined in the endpoint definition, not the API version definition! It specifies the HTTP method used for that endpoint.
 
  - `endpointImplementation` (required)
-	- This points to a function which will be invoked when the endpoint is called. The function must accept three parameters; apiVersion, req, res e.g. `function(apiVersion, req, res) { <endpoint implementation> }` This is based on the [express](https://expressjs.com/en/guide/routing.html) functions `get`, `post`, `delete` and `put` each of which require `req` and `res` parameters.
+	- This points to a function which will be invoked when the endpoint is called. The function must accept three parameters; apiVersion, req, res, next e.g. `function(apiVersion, req, res, next) { <endpoint implementation> }` This is based on the [express](https://expressjs.com/en/guide/routing.html) functions `get`, `post`, `delete` and `put` each of which require `req` and `res` and `next` parameters.
 		- `apiVersion`
 			- This is the API version of the endpoint being called. In the above example, it would be `v1` and `v2` respectively. This can be used in your endpoint implementation function to decide which version of the endpoint is being called. If you choose to reuse the same implementation function across multiple versions but want to make a minor change for one specific version of the endpoint then this will help avoid the need to create another implementation function.
 		- `req`
 			- This is the [express](https://expressjs.com/en/guide/routing.html) router parameter which holds all the request data when the endpoint is called.
 	    - `res`
 		    - This is the [express](https://expressjs.com/en/guide/routing.html) router parameter used to send a response when the endpoint is called.
+	    - `next`
+		    - This is the [express](https://expressjs.com/en/guide/routing.html) router parameter used to pass control to the next handler when the endpoint is called.
 
 
 ----------
