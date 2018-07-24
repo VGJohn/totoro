@@ -33,22 +33,29 @@ Usage
         v1: { // this is an API version definition
             active: true, // this parameter are optional but the default value is true when not specified
             deprecated: false, // this parameter are optional but the default value is false when not specified
-            "/test/endpoint": { // this is an endpoint definition
-                method: "GET",
-                active: true, // this parameter are optional but the default value is true when not specified
-                deprecated: false, // this parameter are optional but the default value is false when not specified
-                endpointImplementation: originalImplementationFunction
-            },
-            "/another/test/endpoint": {
-                method: "POST",
-                endpointImplementation: anotherImplementationFunction
-            }
+            endpoints: [
+	    	{
+		    route: "/test/endpoint",
+		    method: "GET",
+                    active: true, // this parameter are optional but the default value is true when not specified
+		    deprecated: false, // this parameter are optional but the default value is false when not specified
+		    implementation: originalImplementationFunction
+            	},
+            	{
+		    route: "/another/test/endpoint",
+		    method: "POST",
+		    implementation: anotherImplementationFunction
+            	}
+	    ]
         },
         v2: {
-            "/test/endpoint": {
-                method: "GET",
-                endpointImplementation: overridingOriginalImplementationFunction
-            }
+            endpoints: [
+	    	}
+		    route: "/test/endpoint",
+		    method: "GET",
+		    implementation: overridingOriginalImplementationFunction
+            	}
+	    ]
         }
     }));
 
@@ -63,9 +70,9 @@ All the previous endpoints in version `v1` are carried over to version `v2` but 
 
 ----------
 
-Logging can be enabled by passing an extra parameter when calling the `rain` function.
+Logging is performed using [Winston](https://www.npmjs.com/package/winston) by logging debug messages. Logging can be enabled by passing a reference to the Winston logger when calling the `rain` function. 
 
-    totoro.rain({<configuration>}, true)
+    totoro.rain({<configuration>}, winstonLogger)
 
 ----------
 
@@ -81,12 +88,15 @@ The configuration map used in the `rain` function contains a few fields:
  - `method` (required)
 	- This can only be defined in the endpoint definition, not the API version definition! It specifies the HTTP method used for that endpoint.
 
- - `endpointImplementation` (required)
+ - `endpoints` (required)
+	- This is the list of endpoints for the API version definition. Each of the endpoints that you define will create a corresponding route in the router.
+
+ - `implementation` (required)
 	- This points to a function which will be invoked when the endpoint is called. The function must accept three parameters; apiVersion, req, res, next e.g. `function(apiVersion, req, res, next) { <endpoint implementation> }` This is based on the [express](https://expressjs.com/en/guide/routing.html) functions `get`, `post`, `delete` and `put` each of which require `req`, `res` and `next` parameters.
-		- `apiVersion`
-			- This is the API version of the endpoint being called. In the above example, it would be `v1` and `v2` respectively. This can be used in your endpoint implementation function to decide which version of the endpoint is being called. If you choose to reuse the same implementation function across multiple versions but want to make a minor change for one specific version of the endpoint then this will help avoid the need to create another implementation function.
-		- `req`
-			- This is the [express](https://expressjs.com/en/guide/routing.html) router parameter which holds all the request data when the endpoint is called.
+	    - `apiVersion`
+		    - This is the API version of the endpoint being called. In the above example, it would be `v1` and `v2` respectively. This can be used in your endpoint implementation function to decide which version of the endpoint is being called. If you choose to reuse the same implementation function across multiple versions but want to make a minor change for one specific version of the endpoint then this will help avoid the need to create another implementation function.
+	    - `req`
+		    - This is the [express](https://expressjs.com/en/guide/routing.html) router parameter which holds all the request data when the endpoint is called.
 	    - `res`
 		    - This is the [express](https://expressjs.com/en/guide/routing.html) router parameter used to send a response when the endpoint is called.
 	    - `next`
