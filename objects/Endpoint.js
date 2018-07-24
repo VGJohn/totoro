@@ -1,7 +1,6 @@
-function Endpoint(apiVersion, endpoint, endpointConfig) {
+function Endpoint(apiVersion, config) {
     this.apiVersion = apiVersion;
-    this.endpoint = endpoint;
-    this.endpointConfig = endpointConfig;
+    this.config = config;
 }
 
 module.exports = Endpoint;
