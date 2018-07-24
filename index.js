@@ -9,8 +9,8 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 winston.level = consts.LOG_LEVEL;
 
-var rain = function(apiConfig, logging) {
-    enableLogging(logging);
+var rain = function(apiConfig, winstonLogger) {
+    enableLogging(winstonLogger);
 
     var versions = {};
     var previousApiVersion = null;
@@ -59,14 +59,10 @@ var rain = function(apiConfig, logging) {
     return populateRouter(versions);
 }
 
-function enableLogging(logging) {
-    if (logging == null || logging == undefined) return;
+function enableLogging(winstonLogger) {
+    if (winstonLogger == null || winstonLogger == undefined) return;
 
-    if (logging) {
-        winston.add(winston.transports.Console);
-    } else {
-        winston.remove(winston.transports.Console);
-    }
+    winston = winstonLogger;
 }
 
 
@@ -87,7 +83,7 @@ function inheritEndpoints(versions, previousApiVersion, apiVersion) {
 
 function pushOrReplaceRoute(endpoints, endpoint) {
     var replaced = false;
-    for (var i = 0; i < routes.length; i++) {
+    for (var i = 0; i < endpoints.length; i++) {
         if (endpoints[i].config.route == endpoint.config.route
             && endpoints[i].config.method == endpoint.config.method) {
             endpoints[i] = endpoint;
