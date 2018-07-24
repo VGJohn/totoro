@@ -34,28 +34,28 @@ Usage
             active: true, // this parameter are optional but the default value is true when not specified
             deprecated: false, // this parameter are optional but the default value is false when not specified
             endpoints: [
-				{
-					route: "/test/endpoint",
-					method: "GET",
-					active: true, // this parameter are optional but the default value is true when not specified
-					deprecated: false, // this parameter are optional but the default value is false when not specified
-					implementation: originalImplementationFunction
-				},
-				{
-					route: "/another/test/endpoint",
-					method: "POST",
-					implementation: anotherImplementationFunction
-				}
-			]
+                {
+                    route: "/test/endpoint",
+                    method: "GET",
+                    active: true, // this parameter are optional but the default value is true when not specified
+                    deprecated: false, // this parameter are optional but the default value is false when not specified
+                    implementation: originalImplementationFunction
+                },
+                {
+                    route: "/another/test/endpoint",
+                    method: "POST",
+                    implementation: anotherImplementationFunction
+                }
+            ]
         },
         v2: {
-			endpoints: [
-				{
-					route: "/test/endpoint",
-					method: "GET",
-					implementation: overridingOriginalImplementationFunction
-				}
-			]
+            endpoints: [
+                {
+                    route: "/test/endpoint",
+                    method: "GET",
+                    implementation: overridingOriginalImplementationFunction
+                }
+            ]
         }
     }));
 
