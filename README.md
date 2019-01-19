@@ -37,7 +37,7 @@ Usage
                 {
                     route: "/test/endpoint",
                     method: "GET",
-		    middleware: [myMiddlewareFunctionOne, myMiddlewareFunctionTwo]
+		    middleware: [myMiddlewareFunctionOne, myMiddlewareFunctionTwo],
                     active: true, // this parameter are optional but the default value is true when not specified
                     deprecated: false, // this parameter are optional but the default value is false when not specified
                     implementation: originalImplementationFunction
