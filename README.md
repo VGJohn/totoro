@@ -37,6 +37,7 @@ Usage
                 {
                     route: "/test/endpoint",
                     method: "GET",
+		    middleware: [myMiddlewareFunctionOne, myMiddlewareFunctionTwo]
                     active: true, // this parameter are optional but the default value is true when not specified
                     deprecated: false, // this parameter are optional but the default value is false when not specified
                     implementation: originalImplementationFunction
@@ -87,6 +88,9 @@ The configuration map used in the `rain` function contains a few fields:
 
  - `method` (required)
 	- This can only be defined in the endpoint definition, not the API version definition! It specifies the HTTP method used for that endpoint.
+
+- `middleware` (optional)
+	- This fields attaches middleware implementation to a specified endpoint.
 
  - `endpoints` (required)
 	- This is the list of endpoints for the API version definition. Each of the endpoints that you define will create a corresponding route in the router.
