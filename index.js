@@ -16,43 +16,45 @@ var rain = function(apiConfig, winstonLogger) {
     var previousApiVersion = null;
 
     for (var apiVersion in apiConfig) {
-        if (apiConfig.hasOwnProperty(apiVersion)) {
-            var apiVersionConfig = apiConfig[apiVersion];
+        if (!apiConfig.hasOwnProperty(apiVersion)) {
+            continue;
+        }
+            
+        var apiVersionConfig = apiConfig[apiVersion];
 
-            var apiVersionActive = apiVersionConfig.active;
+        var apiVersionActive = apiVersionConfig.active;
+        // use default value if not found
+        if (apiVersionActive == null) apiVersionActive = true;
+
+        var apiVersionDeprecated = apiVersionConfig.deprecated;
+        // use default value if not found
+        if (apiVersionDeprecated == null) apiVersionDeprecated = false;
+
+        delete apiVersionConfig.active;
+        delete apiVersionConfig.deprecated;
+        versions[apiVersion] = [];
+
+        // copy over endpoints from previous version if needed
+        inheritEndpoints(versions, previousApiVersion, apiVersion);
+
+        // set previous api version number
+        previousApiVersion = apiVersion;
+
+        for (var i = 0; i < apiVersionConfig.endpoints.length; i++) {
+            var endpointActive = apiVersionConfig.endpoints[i].active;
             // use default value if not found
-            if (apiVersionActive == null) apiVersionActive = true;
+            if (endpointActive == null) endpointActive = true;
 
-            var apiVersionDeprecated = apiVersionConfig.deprecated;
+            var endpointDeprecated = apiVersionConfig.endpoints[i].deprecated;
             // use default value if not found
-            if (apiVersionDeprecated == null) apiVersionDeprecated = false;
+            if (endpointDeprecated == null) endpointDeprecated = false;
 
-            delete apiVersionConfig.active;
-            delete apiVersionConfig.deprecated;
-            versions[apiVersion] = [];
+            apiVersionConfig.endpoints[i].active = endpointActive && apiVersionActive;
+            apiVersionConfig.endpoints[i].deprecated = endpointDeprecated || apiVersionDeprecated;
+            var endpoint = new Endpoint(apiVersion, apiVersionConfig.endpoints[i]);
 
-            // copy over endpoints from previous version if needed
-            inheritEndpoints(versions, previousApiVersion, apiVersion);
-
-            // set previous api version number
-            previousApiVersion = apiVersion;
-
-            for (var i = 0; i < apiVersionConfig.endpoints.length; i++) {
-                var endpointActive = apiVersionConfig.endpoints[i].active;
-                // use default value if not found
-                if (endpointActive == null) endpointActive = true;
-
-                var endpointDeprecated = apiVersionConfig.endpoints[i].deprecated;
-                // use default value if not found
-                if (endpointDeprecated == null) endpointDeprecated = false;
-
-                apiVersionConfig.endpoints[i].active = endpointActive && apiVersionActive;
-                apiVersionConfig.endpoints[i].deprecated = endpointDeprecated || apiVersionDeprecated;
-                var endpoint = new Endpoint(apiVersion, apiVersionConfig.endpoints[i]);
-
-                // add new endpoint to the list or replace if it exists already
-                pushOrReplaceRoute(versions[apiVersion], endpoint);
-            }
+            // add new endpoint to the list or replace if it exists already
+            pushOrReplaceRoute(versions[apiVersion], endpoint);
         }
     }
 
@@ -72,12 +74,13 @@ function inheritEndpoints(versions, previousApiVersion, apiVersion) {
     }
 
     for (var i = 0; i < versions[previousApiVersion].length; i++) {
-        if (!versions[previousApiVersion][i].config.deprecated) {
-            var endpointCopy = clone(versions[previousApiVersion][i]);
-            endpointCopy.apiVersion = apiVersion;
-            endpointCopy.config.active = true;
-            versions[apiVersion].push(endpointCopy);
+        if (versions[previousApiVersion][i].config.deprecated) {
+            continue;
         }
+        var endpointCopy = clone(versions[previousApiVersion][i]);
+        endpointCopy.apiVersion = apiVersion;
+        endpointCopy.config.active = true;
+        versions[apiVersion].push(endpointCopy);
     }
 }
 
@@ -98,49 +101,56 @@ function pushOrReplaceRoute(endpoints, endpoint) {
 
 function populateRouter(versions) {
     for (var apiVersion in versions) {
-        if (versions.hasOwnProperty(apiVersion)) {
-            winston.debug('Adding routes for API version', apiVersion);
-            for (var i = 0; i < versions[apiVersion].length; i++) {
-                if (versions[apiVersion][i].config.active) {
-                    constructRoute(versions[apiVersion][i]);
-                }
-            }
-            winston.debug('');
+        if (!versions.hasOwnProperty(apiVersion)) {
+            continue;
         }
+        
+        winston.debug('Adding routes for API version', apiVersion);
+        for (var i = 0; i < versions[apiVersion].length; i++) {
+            if (!versions[apiVersion][i].config.active) {
+                continue;        
+            }
+            constructRoute(versions[apiVersion][i]);
+        }
+        winston.debug('');
     }
 
     return router;
 }
 
 function constructRoute(endpoint) {
-    switch (endpoint.config.method) {
-        case consts.HTTP_GET:
+    var mapperMethods = {
+        [consts.HTTP_GET]: function() {
             winston.debug('Adding route \'' + endpoint.config.method, ' /' + endpoint.apiVersion + endpoint.config.route + '\'');
             router.get('/' + endpoint.apiVersion + endpoint.config.route, function(req, res, next) {
                 endpoint.config.implementation(endpoint.apiVersion, req, res, next);
             });
-            break;
-        case consts.HTTP_POST:
+        },
+        [consts.HTTP_POST]: function() {
             winston.debug('Adding route \'' + endpoint.config.method, ' /' + endpoint.apiVersion + endpoint.config.route + '\'');
             router.post('/' + endpoint.apiVersion + endpoint.config.route, urlencodedParser, function(req, res, next) {
                 endpoint.config.implementation(endpoint.apiVersion, req, res, next);
             });
-            break;
-        case consts.HTTP_DELETE:
+        },
+        [consts.HTTP_DELETE]: function() {
             winston.debug('Adding route \'' + endpoint.config.method, ' /' + endpoint.apiVersion + endpoint.config.route + '\'');
             router.delete('/' + endpoint.apiVersion + endpoint.config.route, function(req, res, next) {
                 endpoint.config.implementation(endpoint.apiVersion, req, res, next);
             });
-            break;
-        case consts.HTTP_PUT:
+        },
+        [consts.HTTP_PUT]: function() {
             winston.debug('Adding route \'' + endpoint.config.method, ' /' + endpoint.apiVersion + endpoint.config.route + '\'');
             router.put('/' + endpoint.apiVersion + endpoint.config.route, function(req, res, next) {
                 endpoint.config.implementation(endpoint.apiVersion, req, res, next);
             });
-            break;
-        default:
-            winston.debug('HTTP Method not recognised! Not adding endpoint \'' + endpoint.config.method, ' /' + endpoint.apiVersion + endpoint.config.route + '\'');
+        }
     }
+
+    if(!Object.prototype.hasOwnProperty.call(mapperMethods, endpoint.config.method)) {
+        return winston.debug('HTTP Method not recognised! Not adding endpoint \'' + endpoint.config.method, ' /' + endpoint.apiVersion + endpoint.config.route + '\'');
+    }
+
+    return mapperMethods[endpoint.config.method]();
 }
 
 module.exports = {
