@@ -1,6 +1,6 @@
 {
   "name": "totoro-node",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Route Management for API Versioning",
   "main": "index.js",
   "scripts": {
@@ -8,13 +8,10 @@
   },
   "dependencies": {
     "express": "^4.14.0",
-    "winston": "^2.3.0",
-    "js-yaml": "3.8.2",
-    "clone": "^2.1.0",
-    "body-parser": "^1.15.2"
+    "winston": "^2.3.0"
   },
   "repository": {
-    "url": "https://github.com/VGJohn/totoro.git",
+    "url": "https://github.com/melnele/totoro-middleware.git",
     "type": "git"
   },
   "keywords": [
