@@ -11,7 +11,7 @@
     "winston": "^2.3.0"
   },
   "repository": {
-    "url": "https://github.com/melnele/totoro-middleware.git",
+    "url": "https://github.com/VGJohn/totoro.git",
     "type": "git"
   },
   "keywords": [
