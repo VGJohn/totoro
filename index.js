@@ -138,7 +138,13 @@ function constructRoute(endpoint) {
                 endpoint.config.implementation(endpoint.apiVersion, req, res, next);
             });
             break;
-        default:
+        case consts.HTTP_PATCH:
+            winston.debug('Adding route \'' + endpoint.config.method, ' /' + endpoint.apiVersion + endpoint.config.route + '\'');
+            router.patch('/' + endpoint.apiVersion + endpoint.config.route, function(req, res, next) {
+                endpoint.config.implementation(endpoint.apiVersion, req, res, next);
+            });
+            break;
+         default:
             winston.debug('HTTP Method not recognised! Not adding endpoint \'' + endpoint.config.method, ' /' + endpoint.apiVersion + endpoint.config.route + '\'');
     }
 }
