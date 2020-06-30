@@ -1,6 +1,6 @@
 {
 	"name": "totoro-node",
-	"version": "2.0.0",
+	"version": "2.0.1",
 	"description": "Route Management for API Versioning",
 	"main": "index.js",
 	"scripts": {
