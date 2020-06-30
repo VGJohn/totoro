@@ -6,6 +6,13 @@ const HTTP_PATCH    = "PATCH";
 const LOG_LEVEL     = "debug";
 
 module.exports = {
+    HTTP_METHODS: [
+        HTTP_GET,
+        HTTP_POST,
+        HTTP_DELETE,
+        HTTP_PUT,
+        HTTP_PATCH,
+    ],
     HTTP_GET: HTTP_GET,
     HTTP_POST: HTTP_POST,
     HTTP_DELETE: HTTP_DELETE,
