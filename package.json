@@ -3,6 +3,9 @@
 	"version": "2.0.0",
 	"description": "Route Management for API Versioning",
 	"main": "index.js",
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/"
+	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -35,5 +38,8 @@
 		"reduce code duplication"
 	],
 	"author": "VGJohn",
+	"maintainers": [
+		"Tushar Pandey <tusharpandey13@gmail.com> (https://github.com/tusharpandey13)"
+	],
 	"license": "MIT"
 }
