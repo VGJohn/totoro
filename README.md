@@ -1,4 +1,4 @@
-**Unmaintained**
+***~~Unmaintained~~ Awaiting npmjs.org collaboration request***
 ===============
 **totoro-node**
 ===============
