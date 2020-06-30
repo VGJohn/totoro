@@ -99,7 +99,7 @@ The configuration map used in the `rain` function contains a few fields:
 
  - `implementation` (required)
 	- This points to a function which will be invoked when the endpoint is called. The function must accept four(4) parameters; apiVersion, req, res, next e.g. `function(apiVersion, req, res, next) { <endpoint implementation> }` This is based on the [express](https://expressjs.com/en/guide/routing.html) functions `get`, `post`, `delete` and `put` each of which require `req`, `res` and `next` parameters.
-	- `apiVersion`
+	    - `apiVersion`
 		    - This is the API version of the endpoint being called. In the above example, it would be `v1` and `v2` respectively. This can be used in your endpoint implementation function to decide which version of the endpoint is being called. If you choose to reuse the same implementation function across multiple versions but want to make a minor change for one specific version of the endpoint then this will help avoid the need to create another implementation function.
 	    - `req`
 		    - This is the [express](https://expressjs.com/en/guide/routing.html) router parameter which holds all the request data when the endpoint is called.
