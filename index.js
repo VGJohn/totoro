@@ -3,6 +3,7 @@ const winston = require('winston');
 const consts = require('./consts.js');
 const Endpoint = require('./objects/Endpoint.js');
 
+// log level
 winston.level = consts.LOG_LEVEL;
 
 const defaultMiddleware = (res, req, next) => next();
