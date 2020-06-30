@@ -111,3 +111,4 @@ The configuration map used in the `rain` function contains a few fields:
 ----------
 If you have any suggestions or encounter any problems using this module then feel free to open an issue on [GitHub](https://github.com/VGJohn/totoro).
 Thank you for reading :)
+

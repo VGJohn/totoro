@@ -3,9 +3,6 @@
 	"version": "2.0.0",
 	"description": "Route Management for API Versioning",
 	"main": "index.js",
-	"publishConfig": {
-		"registry": "https://npm.pkg.github.com/"
-	},
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
@@ -14,7 +11,7 @@
 		"winston": "^3.3.3"
 	},
 	"repository": {
-		"url": "https://github.com/VGJohn/totoro.git",
+		"url": "git://github.com/VGJohn/totoro.git",
 		"type": "git"
 	},
 	"keywords": [
