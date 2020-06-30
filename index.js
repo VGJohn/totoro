@@ -109,11 +109,7 @@ function populateRouter(versions) {
 }
 
 function constructRoute(endpoint) {
-	const RouteFunction = (req, res, next) => {
-			req.apiVersion = endpoint.apiVersion;
-			return endpoint.config.implementation(req, res, next);
-		},
-		endpointURL = `/${endpoint.apiVersion}${endpoint.config.route}`;
+	const endpointURL = `/${endpoint.apiVersion}${endpoint.config.route}`;
 
 	if (!consts.HTTP_METHODS.includes(endpoint.config.method)) {
 		winston.error(
@@ -125,7 +121,9 @@ function constructRoute(endpoint) {
 	router[endpoint.config.method.toLowerCase()](
 		endpointURL,
 		endpoint.config.middleware,
-		RouteFunction
+		(req, res, next) => {
+			endpoint.config.implementation(endpoint.apiVersion, req, res, next);
+		}
 	);
 }
 
