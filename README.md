@@ -1,7 +1,7 @@
-***~~Unmaintained~~ Awaiting npmjs.org collaboration request***
-===============
-**totoro-node**
-===============
+## ***~~Unmaintained~~ Awaiting npmjs.org collaboration request***
+
+# **totoro-node**
+
 
 
 Totoro is a Node.js module to help simplify route management and reduce code duplication for multiple API versions. Totoro will keep you dry!
@@ -79,28 +79,28 @@ Logging is performed using [Winston](https://www.npmjs.com/package/winston) by l
 
 ----------
 
-The configuration map used in the `rain` function contains a few fields:
+The configuration map used in the `rain` function contains a few fields:  
 
- - `active` (optional)
+ - `active` (optional)  
 	 - This indicates whether or not the endpoint should be added to the current version of your API. If this field is set to false for an entire API version then that version will no longer be accessible but subsequent versions of the API will still inherit all the endpoints of this disabled version. This allows you to easily bump the version of an entire API while updating the implementation of specific endpoints in the next version.
      If this field is set to false for a specific endpoint definition then only that endpoint is excluded from the version. But, as before the endpoint is still inherited by later versions of the API meaning you can provide an updated implementation if you no longer want the old version to be used. By default this is set to true.
 
- - `deprecated` (optional)
+ - `deprecated` (optional)  
 	 - This field allows you to disable the inheritance of an entire API or a specific set of endpoints in later versions of your API. By setting this to true, the endpoint or API version will no longer be accessible in subsequent versions of the API but will still be included in the current version. This is most to support legacy applications that may not have upgraded to your latest API version. By default this is set to false.
 
- - `method` (required)
+ - `method` (required)  
 	- This can only be defined in the endpoint definition, not the API version definition! It specifies the HTTP method used for that endpoint.
 
-- `middleware` (optional)
-	- This fields attaches middleware implementation to a specified endpoint.
+- `middleware` (optional)  
+	- This fields attaches middleware implementation to a specified endpoint.  
 
- - `endpoints` (required)
-	- This is the list of endpoints for the API version definition. Each of the endpoints that you define will create a corresponding route in the router.
+ - `endpoints` (required)  
+	- This is the list of endpoints for the API version definition. Each of the endpoints that you define will create a corresponding route in the router.  
 
- - `implementation` (required)
-	- This points to a function which will be invoked when the endpoint is called. The function must accept four(4) parameters; apiVersion, req, res, next e.g. `function(apiVersion, req, res, next) { <endpoint implementation> }` This is based on the [express](https://expressjs.com/en/guide/routing.html) functions `get`, `post`, `delete` and `put` each of which require `req`, `res` and `next` parameters.
-	    - `apiVersion`
-		    - This is the API version of the endpoint being called. In the above example, it would be `v1` and `v2` respectively. This can be used in your endpoint implementation function to decide which version of the endpoint is being called. If you choose to reuse the same implementation function across multiple versions but want to make a minor change for one specific version of the endpoint then this will help avoid the need to create another implementation function.
+ - `implementation` (required)  
+	- This points to a function which will be invoked when the endpoint is called. The function must accept three parameters; apiVersion, req, res, next e.g. `function(apiVersion, req, res, next) { <endpoint implementation> }` This is based on the [express](https://expressjs.com/en/guide/routing.html) functions `get`, `post`, `delete` and `put` each of which require `req`, `res` and `next` parameters.  
+	    - `apiVersion`  
+	        - This is the API version of the endpoint being called. In the above example, it would be `v1` and `v2` respectively. This can be used in your endpoint implementation function to decide which version of the endpoint is being called. If you choose to reuse the same implementation function across multiple versions but want to make a minor change for one specific version of the endpoint then this will help avoid the need to create another implementation function.
 	    - `req`
 		    - This is the [express](https://expressjs.com/en/guide/routing.html) router parameter which holds all the request data when the endpoint is called.
 	    - `res`
