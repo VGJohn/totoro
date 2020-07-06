@@ -3,8 +3,14 @@ const winston = require('winston');
 const consts = require('./consts.js');
 const Endpoint = require('./objects/Endpoint.js');
 
-// logger level
-winston.level = consts.LOG_LEVEL;
+const logger = winston.createLogger({
+	// level: consts.LOG_LEVEL,
+	format: winston.format.json(),
+	transports: [
+		new winston.transports.Console(),
+		// new winston.transports.File({ filename: 'logfile.log' }),
+	],
+});
 
 const defaultMiddleware = (res, req, next) => next();
 
@@ -96,13 +102,13 @@ function pushOrReplaceRoute(endpoints, endpoint) {
 function populateRouter(versions) {
 	for (let apiVersion in versions) {
 		if (versions.hasOwnProperty(apiVersion)) {
-			winston.debug(`Start of API version`, apiVersion);
+			logger.debug(`Start of API version`, apiVersion);
 			for (let i = 0; i < versions[apiVersion].length; i++) {
 				if (versions[apiVersion][i].config.active) {
 					constructRoute(versions[apiVersion][i]);
 				}
 			}
-			winston.debug(`End of API version`, apiVersion, '\n');
+			logger.debug(`End of API version`, apiVersion, '\n');
 		}
 	}
 
@@ -113,12 +119,12 @@ function constructRoute(endpoint) {
 	const endpointURL = `/${endpoint.apiVersion}${endpoint.config.route}`;
 
 	if (!consts.HTTP_METHODS.includes(endpoint.config.method)) {
-		winston.error(
+		logger.error(
 			`HTTP Method not recognised! '${endpoint.config.method} ${endpointURL}'`
 		);
 		return;
 	}
-	winston.debug(`Adding route '${endpoint.config.method} ${endpointURL}'`);
+	logger.debug(`Adding route '${endpoint.config.method} ${endpointURL}'`);
 	router[endpoint.config.method.toLowerCase()](
 		endpointURL,
 		endpoint.config.middleware,
