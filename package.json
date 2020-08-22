@@ -1,42 +1,42 @@
 {
-	"name": "totoro-node",
-	"version": "2.0.3",
-	"description": "Route Management for API Versioning",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"dependencies": {
-		"express": "^4.17.1",
-		"winston": "^3.3.3"
-	},
-	"repository": {
-		"url": "git://github.com/VGJohn/totoro.git",
-		"type": "git"
-	},
-	"keywords": [
-		"api",
-		"api version",
-		"api versions",
-		"api-versioning",
-		"node",
-		"node.js",
-		"totoro",
-		"totoro-node",
-		"route",
-		"routes",
-		"route manager",
-		"express",
-		"express router",
-		"route management",
-		"module",
-		"api version manager",
-		"deprecate routes",
-		"reduce code duplication"
-	],
-	"author": "VGJohn",
-	"maintainers": [
-		"Tushar Pandey <tusharpandey13@gmail.com> (https://github.com/tusharpandey13)"
-	],
-	"license": "MIT"
+  "name": "totoro-node",
+  "version": "2.0.4",
+  "description": "Route Management for API Versioning",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "winston": "^3.3.3"
+  },
+  "repository": {
+    "url": "git://github.com/VGJohn/totoro.git",
+    "type": "git"
+  },
+  "keywords": [
+    "api",
+    "api version",
+    "api versions",
+    "api-versioning",
+    "node",
+    "node.js",
+    "totoro",
+    "totoro-node",
+    "route",
+    "routes",
+    "route manager",
+    "express",
+    "express router",
+    "route management",
+    "module",
+    "api version manager",
+    "deprecate routes",
+    "reduce code duplication"
+  ],
+  "author": "VGJohn",
+  "maintainers": [
+    "Tushar Pandey <tusharpandey13@gmail.com> (https://github.com/tusharpandey13)"
+  ],
+  "license": "MIT"
 }
