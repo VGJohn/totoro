@@ -10,19 +10,17 @@ Totoro uses [express](https://expressjs.com/) to create a router with all the ro
 
 ----------
 
-Installation
+## Installation  
 
     npm install totoro-node
 
-or add a dependency to your package.json
+or add a dependency to your package.json  
 
     "totoro-node": "<version>"
 
 
 ----------
-
-
-Usage
+## Usage  
 
     var express = require('express')
     var app = express();
@@ -70,14 +68,15 @@ This returns a router with the following routes:
 All the previous endpoints in version `v1` are carried over to version `v2` but any endpoints that are redefined in `v2` will override the original endpoint with the new `v2` implementation. This type of inheritance and overriding can be controlled using the `active` and `deprecated` fields in the API versioning definition above.
 
 ----------
+## Logging  
+Logging is performed internally using [Winston](https://www.npmjs.com/package/winston) by logging debug messages. Logging can be enabled by passing a reference to the Winston logger when calling the `rain` function.  
+Note: Any other logger object that supports `logger.log({<level>, <message>})` interface can be passed to `loggerInstance`.
 
-Logging is performed using [Winston](https://www.npmjs.com/package/winston) by logging debug messages. Logging can be enabled by passing a reference to the Winston logger when calling the `rain` function. 
-
-    totoro.rain({<configuration>}, winstonLogger)
+    totoro.rain({<configuration>}, loggerInstance)
 
 ----------
-
-The configuration map used in the `rain` function contains a few fields:  
+## Configuration  
+The configuration map used in the `rain` function contains a few fields:   
 
  - `active` (optional)  
 	 - This indicates whether or not the endpoint should be added to the current version of your API. If this field is set to false for an entire API version then that version will no longer be accessible but subsequent versions of the API will still inherit all the endpoints of this disabled version. This allows you to easily bump the version of an entire API while updating the implementation of specific endpoints in the next version.
@@ -107,6 +106,8 @@ The configuration map used in the `rain` function contains a few fields:
 		    - This is the [express](https://expressjs.com/en/guide/routing.html) router parameter used to pass control to the next handler when the endpoint is called.
 
 ----------
-If you have any suggestions or encounter any problems using this module then feel free to open an issue on [GitHub](https://github.com/VGJohn/totoro).
+## Contact
+If you have any suggestions or encounter any problems using this module then feel free to open an issue on [GitHub](https://github.com/VGJohn/totoro).  
+Contributions are welcome.  
 Thank you for reading :)
 

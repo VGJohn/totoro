@@ -33,11 +33,7 @@ const rain = (apiConfig, loggerInstance = undefined) => {
   // maybe use TS next time?
   try {
     logger =
-      loggerInstance &&
-      typeof loggerInstance['debug'] === 'function' &&
-      typeof loggerInstance['error'] === 'function'
-        ? loggerInstance
-        : createLogger();
+      loggerInstance && typeof loggerInstance['log'] === 'function' ? loggerInstance : createLogger();
   } catch (err) {
     // idk when this will be called. maybe at nuclear apocalypse when winston stops working
     logger = console;
