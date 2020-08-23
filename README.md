@@ -21,8 +21,21 @@ or add a dependency to your package.json
 
 ----------
 ## Usage  
+The following syntax can be used:  
 
-    var express = require('express')
+    app.use(path, totoro.rain(configuration, loggerInstance, clearConsole));
+
+Where,  
+* `path` is the base path for the router returned by totoro.rain().  
+* `configuration` is the router configuration, as described below.  
+* `loggerInstance` is a custom logger instance.  
+* `clearConsole` boolean; if true, console will be cleared whenever rain() is called. Defaults to `false`.  
+
+----------
+## Example
+
+
+    var express = require('express');
     var app = express();
 
     var totoro = require('totoro-node');

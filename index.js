@@ -29,7 +29,7 @@ const createLogger = () => {
   });
 };
 
-const rain = (apiConfig, loggerInstance = undefined) => {
+const rain = (apiConfig, loggerInstance = undefined, clearConsole = false) => {
   // maybe use TS next time?
   try {
     logger =
@@ -40,7 +40,7 @@ const rain = (apiConfig, loggerInstance = undefined) => {
     logger.log(err);
   }
 
-  clearConsoleAndScrollbackBuffer();
+  clearConsole && clearConsoleAndScrollbackBuffer();
 
   const versions = {};
   let previousApiVersion = null;
